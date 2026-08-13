@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Lang = "fr" | "en";
 
@@ -427,7 +428,13 @@ export default function Home() {
       <div id="contenu" className="page-shell">
         <section id="top" className="hero-grid" aria-labelledby="hero-title">
           <div className="portrait-card card">
-            <img src="/joseph-edim.png" alt="Joseph Edim, software engineer à Lomé" />
+            <Image
+              src="/joseph-edim.png"
+              alt="Joseph Edim, software engineer à Lomé"
+              fill
+              sizes="(max-width: 680px) calc(100vw - 24px), (max-width: 980px) 34vw, 305px"
+              priority
+            />
             <div className="portrait-overlay"><span className="status-dot" />{t.available}</div>
           </div>
           <div className="hero-copy card">

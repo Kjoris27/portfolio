@@ -1,0 +1,23 @@
+import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
+import test from "node:test";
+
+test("contains the bilingual portfolio and contact links", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /Joseph Edim/);
+  assert.match(page, /AllFiles\.io/);
+  assert.match(page, /DziGbodI/);
+  assert.match(page, /GOZEM/);
+  assert.match(page, /wa\.me\/22892494828/);
+  assert.match(page, /setLang\("fr"\)/);
+  assert.match(page, /setLang\("en"\)/);
+});
+
+test("ships the public portfolio assets", async () => {
+  await Promise.all([
+    access(new URL("../public/joseph-edim.png", import.meta.url)),
+    access(new URL("../public/Joseph-Edim-CV-2026.pdf", import.meta.url)),
+    access(new URL("../public/og.png", import.meta.url)),
+  ]);
+});
