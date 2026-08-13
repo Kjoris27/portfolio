@@ -191,7 +191,7 @@ const projects: Project[] = [
       },
     },
     tech: ["Next.js", "TypeScript", "Deno", "Stripe", "SaaS"],
-    url: "https://www.allfiles.io/",
+    url: "https://all-files-j6zzxmwxp-kjoris27s-projects.vercel.app/",
     tone: "violet",
     index: "01",
   },
