@@ -401,19 +401,32 @@ function ProjectVisual({ id }: { id: string }) {
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("fr");
-  const [openProject, setOpenProject] = useState<string | null>("allfiles");
+  const [openProject, setOpenProject] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = copy[lang];
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
+
   return (
     <main>
       <a className="skip-link" href="#contenu">{lang === "fr" ? "Aller au contenu" : "Skip to content"}</a>
       <header className="site-header">
         <a className="monogram" href="#top" aria-label="Joseph Edim — accueil">JE<span>.</span></a>
-        <nav aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}>
+        <nav className="desktop-nav" aria-label={lang === "fr" ? "Navigation principale" : "Main navigation"}>
           {t.nav.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
         </nav>
         <div className="header-actions">
@@ -422,8 +435,34 @@ export default function Home() {
             <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")} aria-pressed={lang === "en"}>EN</button>
           </div>
           <a className="header-cta" href="#contact">{t.contactMe} <span>↗</span></a>
+          <button
+            className={`mobile-menu-button ${menuOpen ? "is-open" : ""}`}
+            type="button"
+            onClick={() => setMenuOpen((current) => !current)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? (lang === "fr" ? "Fermer le menu" : "Close menu") : (lang === "fr" ? "Ouvrir le menu" : "Open menu")}
+          >
+            <span /><span />
+          </button>
         </div>
       </header>
+
+      <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen}>
+        <button className="mobile-menu-backdrop" type="button" onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} aria-label={lang === "fr" ? "Fermer le menu" : "Close menu"} />
+        <nav id="mobile-navigation" aria-label={lang === "fr" ? "Navigation mobile" : "Mobile navigation"}>
+          <p>Navigation</p>
+          {t.nav.map(([label, href], index) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1}>
+              <span>0{index + 1}</span>{label}<b>↘</b>
+            </a>
+          ))}
+          <div className="mobile-menu-socials">
+            <a href="https://www.linkedin.com/in/joseph-edim" target="_blank" rel="noreferrer" tabIndex={menuOpen ? 0 : -1}>LinkedIn ↗</a>
+            <a href="https://github.com/Kjoris27" target="_blank" rel="noreferrer" tabIndex={menuOpen ? 0 : -1}>GitHub ↗</a>
+          </div>
+        </nav>
+      </div>
 
       <div id="contenu" className="page-shell">
         <section id="top" className="hero-grid" aria-labelledby="hero-title">
@@ -594,6 +633,12 @@ export default function Home() {
           <div><a href="https://www.linkedin.com/in/joseph-edim" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com/Kjoris27" target="_blank" rel="noreferrer">GitHub ↗</a></div>
         </footer>
       </div>
+
+      <nav className="mobile-contact-dock" aria-label={lang === "fr" ? "Contacts rapides" : "Quick contacts"}>
+        <a href="mailto:edimjoseph04@gmail.com"><span>✉</span>Email</a>
+        <a className="dock-whatsapp" href="https://wa.me/22892494828" target="_blank" rel="noreferrer"><span>●</span>WhatsApp</a>
+        <a href="/Joseph-Edim-CV-2026.pdf" download><span>↓</span>CV</a>
+      </nav>
     </main>
   );
 }

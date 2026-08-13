@@ -21,3 +21,16 @@ test("ships the public portfolio assets", async () => {
     access(new URL("../public/og.png", import.meta.url)),
   ]);
 });
+
+test("ships a dedicated mobile navigation and responsive recruiter actions", async () => {
+  const [page, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /mobile-menu-button/);
+  assert.match(page, /mobile-contact-dock/);
+  assert.match(page, /aria-expanded=\{menuOpen\}/);
+  assert.match(styles, /@media \(max-width: 680px\)/);
+  assert.match(styles, /min-height: 48px/);
+});
