@@ -257,8 +257,10 @@ export default function Home() {
       <div id="contenu" className="page-shell">
         <section id="top" className="hero-grid" aria-labelledby="hero-title">
           <div className="hero-copy card">
-            <p className="eyebrow">{t.location}</p>
-            <h1 id="hero-title">Joseph Edim</h1>
+            <div className="hero-heading">
+              <p className="eyebrow">{t.location}</p>
+              <h1 id="hero-title">Joseph Edim</h1>
+            </div>
             <p className="hero-lead">{t.intro}</p>
             <p className="hero-description">{t.focus}</p>
             <div className="hero-actions">
@@ -272,7 +274,7 @@ export default function Home() {
               src="/joseph-edim.png"
               alt="Joseph Edim"
               fill
-              sizes="(max-width: 680px) calc(100vw - 32px), (max-width: 980px) 35vw, 360px"
+              sizes="(max-width: 680px) 64px, (max-width: 980px) 35vw, 360px"
               preload
             />
           </div>
