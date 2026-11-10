@@ -184,10 +184,37 @@ footer .monogram { color: var(--text); }
   .header-cta { display: none; }
   .language-switch button { min-width: 37px; min-height: 36px; padding: 0; }
   .mobile-menu { inset: 64px 0 0; }
-  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 16px; }
-  .hero-copy { padding: 22px 18px; }
-  .portrait-card { min-height: 240px; }
-  .portrait-card img { object-position: 50% 25%; }
+  .hero-grid {
+    --hero-inset-inline: 18px;
+    --hero-inset-block: 22px;
+    --portrait-size: 64px;
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 16px;
+  }
+  .hero-copy { grid-area: 1 / 1; padding: var(--hero-inset-block) var(--hero-inset-inline); }
+  .hero-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--portrait-size);
+    padding-inline-end: calc(var(--portrait-size) + 12px);
+    margin-bottom: 16px;
+  }
+  .hero-copy h1 { margin: 7px 0 0; font-size: clamp(32px, 9vw, 44px); }
+  .portrait-card {
+    grid-area: 1 / 1;
+    place-self: start end;
+    width: var(--portrait-size);
+    height: var(--portrait-size);
+    min-height: 0;
+    margin: calc(var(--hero-inset-block) + 1px) calc(var(--hero-inset-inline) + 1px) 0 0;
+    border-radius: 14px;
+  }
+  .portrait-card img {
+    object-position: 50% 10%;
+    transform: translateY(9%) scale(1.65);
+    transform-origin: 50% 35%;
+  }
   .section-block, .contact-section { margin-top: 48px; scroll-margin-top: 80px; }
   .project-card, .experience-layout, .contact-section { grid-template-columns: minmax(0, 1fr); }
   .project-copy { padding: 8px 5px 2px; }
