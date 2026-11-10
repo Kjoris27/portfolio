@@ -7,8 +7,14 @@ test("contains the bilingual portfolio and contact links", async () => {
 
   assert.match(page, /Joseph Edim/);
   assert.match(page, /AllFiles\.io/);
-  assert.match(page, /DziGbodI/);
-  assert.match(page, /GOZEM/);
+  assert.match(page, /name: "Lokki"/);
+  assert.match(page, /name: "Maillot Drip"/);
+  assert.equal([...page.matchAll(/^    id: "/gm)].length, 3);
+  assert.match(page, /https:\/\/all-files-three\.vercel\.app\//);
+  assert.match(page, /linkedin\.com\/in\/joseph-edim/);
+  assert.match(page, /github\.com\/Kjoris27/);
+  assert.match(page, /Gozem/);
+  assert.doesNotMatch(page, /Graduate Tech Trainee/);
   assert.match(page, /wa\.me\/22892494828/);
   assert.match(page, /setLang\("fr"\)/);
   assert.match(page, /setLang\("en"\)/);
